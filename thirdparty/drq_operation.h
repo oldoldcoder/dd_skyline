@@ -18,15 +18,7 @@ typedef struct {
     BIGNUM *** range;
 }query_range;
 /*--------------------------JNA定义----------------------------*/
-#ifdef __cplusplus
-extern "C" {
-#endif
-EXPORT_SYMBOL RESULT init_algo(drq_data_set * set,char * filePath);
-EXPORT_SYMBOL RESULT query_algo(drq_data_set * set,char * queryPath,char * resultFilePath);
-EXPORT_SYMBOL RESULT free_algo(drq_data_set * set);
-#ifdef __cplusplus
-}
-#endif
+
 /*---------------------操作方法---------------------*/
 // 初始化查询范围
 RESULT drq_init_query_range(query_range * ranges,int d);
