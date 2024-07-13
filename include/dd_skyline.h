@@ -24,7 +24,7 @@ extern "C" {
 #endif
 
 EXPORT_SYMBOL RESULT init_algo(drq_data_set * set,char * filePath);
-EXPORT_SYMBOL RESULT query_algo(drq_data_set * set,char * queryPath,char * resultFilePath);
+EXPORT_SYMBOL RESULT query_algo(drq_data_set * set,char * queryPath,char * pointYPath,char * resultFilePath);
 EXPORT_SYMBOL RESULT free_algo(drq_data_set * set);
 
 #ifdef __cplusplus

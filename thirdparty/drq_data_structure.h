@@ -15,7 +15,6 @@
 #define EXPORT_SYMBOL __attribute__((visibility("default")))
 #endif
 /*-------------------JNA接口定义------------------*/
-
 /*-----------------------------常量定义----------------------------*/
 // 数据拥有者
 typedef struct {
