@@ -124,9 +124,6 @@ RESULT drq_free_data_set(drq_data_set* set) {
 	// 释放上下文
 	BN_CTX_free(set->ctx);
 
-	// 释放set本身
-	free(set);
-
 	return SUCCESS;
 }
 
