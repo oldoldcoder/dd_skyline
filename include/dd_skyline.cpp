@@ -29,7 +29,7 @@ EXPORT_SYMBOL RESULT init_algo(drq_data_set* set, char* filePath) {
 			return ERROR;
 		}
 	}
-
+	return SUCCESS;
 }
 EXPORT_SYMBOL RESULT query_algo(drq_data_set* set, char* queryPath, char* pointYPath, char* resultFilePath) {
 	// 先构建查询的范围
@@ -50,6 +50,16 @@ EXPORT_SYMBOL RESULT query_algo(drq_data_set* set, char* queryPath, char* pointY
 	point_y* y = read_point_y(pointYPath);
 	unordered_map<int, void*> map;
 	organize_points_by_ids(set, &ve, &map);
+    // 打印出来看看map里面的点：
+//    for(auto it : map){
+//        auto arr = reinterpret_cast<vector<BIGNUM*>*>(it.second);
+//        cout<<endl;
+//        for(auto itt : *arr){
+//            char * str = BN_bn2dec(itt);
+//            cout<<str<<" ";
+//        }
+//        cout<<endl;
+//    }
 
 	select_and_export_points(&map, y, resultFilePath);
 	// 清空map的东西
@@ -66,7 +76,7 @@ EXPORT_SYMBOL RESULT query_algo(drq_data_set* set, char* queryPath, char* pointY
 	return SUCCESS;
 }
 EXPORT_SYMBOL RESULT free_algo(drq_data_set* set) {
-	drq_free_data_set(set);
+	// drq_free_data_set(set);
 	return SUCCESS;
 }
 // 读取用来查询的y点
@@ -78,7 +88,7 @@ point_y* read_point_y(char* filePath) {
 	}
 	auto* y = (point_y*)malloc(sizeof(point_y));
 	string  line;
-	// 读取数据拥有者的数量
+
 	if (std::getline(infile, line)) {
 		std::istringstream iss(line);
 		iss >> y->d;
@@ -168,17 +178,15 @@ bool is_dominated(vector<BIGNUM*>* x_i, vector<BIGNUM*>* x_j, point_y* y) {
 		char* str;
 		BN_sub(diff_i, (*x_i)[l], y->values[l]);
 		str = BN_bn2dec(diff_i);
-		cout << "diff_i" << str << endl;
+
 		BN_sub(diff_j, (*x_j)[l], y->values[l]);
 		str = BN_bn2dec(diff_j);
-		cout << "diff_j" << str << endl;
+
 		abs_diff_i = BN_abs(diff_i);
 		str = BN_bn2dec(abs_diff_i);
-		cout << "abs_diff_i" << str << endl;
 		abs_diff_j = BN_abs(diff_j);
 
 		str = BN_bn2dec(abs_diff_j);
-		cout << "abs_diff_j" << str << endl;
 
 		if (BN_cmp(abs_diff_i, abs_diff_j) > 0) {
 			all_less_equal = false;
